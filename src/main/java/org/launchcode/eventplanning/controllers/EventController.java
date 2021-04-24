@@ -15,10 +15,10 @@ public class EventController {
     @Autowired
     private EventRepository eventRepository;
 
-    @RequestMapping("")
+    @RequestMapping("events")
     public String index(Model model){
         model.addAttribute("events", eventRepository.findAll());
-        return "index";
+        return "events";
     }
 
     @GetMapping("add")
