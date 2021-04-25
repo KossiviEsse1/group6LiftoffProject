@@ -1,4 +1,4 @@
-package org.launchcode.eventplanning.models.DTO;
+package org.launchcode.eventplanning.models.dto;
 
 public class RegistrationFormDTO extends LoginFormDTO {
     private String verifyPassword;

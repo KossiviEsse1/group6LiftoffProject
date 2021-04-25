@@ -1,7 +1,7 @@
 package org.launchcode.eventplanning.controllers;
 
-import org.launchcode.eventplanning.models.DTO.LoginFormDTO;
-import org.launchcode.eventplanning.models.DTO.RegistrationFormDTO;
+import org.launchcode.eventplanning.models.dto.LoginFormDTO;
+import org.launchcode.eventplanning.models.dto.RegistrationFormDTO;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

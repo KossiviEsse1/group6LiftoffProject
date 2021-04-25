@@ -1,4 +1,4 @@
-package org.launchcode.eventplanning.models.DTO;
+package org.launchcode.eventplanning.models.dto;
 
 import com.sun.istack.NotNull;
 import javax.validation.constraints.NotBlank;
