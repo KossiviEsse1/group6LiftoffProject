@@ -6,49 +6,51 @@ import org.launchcode.eventplanning.models.data.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
     @RequestMapping("search")
     public class SearchController {
 
-        @Autowired
-        private EventRepository eventRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     static HashMap<String, String> columnChoices = new HashMap<>();
 
-    public SearchController () {
-
+    public SearchController() {
         columnChoices.put("all", "All");
+        columnChoices.put("name", "Name");
         columnChoices.put("location", "Location");
-        columnChoices.put("description", "Description");
+        //columnChoices.put("description", "Description");
 
     }
 
-        @RequestMapping("")
-        public String search(Model model) {
-            model.addAttribute("columns", columnChoices);
-            return "search";
-        }
-
-        @PostMapping("results")
-        public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
-            Iterable<Event> events;
-
-            if (searchTerm.toLowerCase().equals("all") || searchTerm.equals("")){
-                events = eventRepository.findAll();
-            } else {
-                events = EventData.findByColumnAndValue(searchType, searchTerm, eventRepository.findAll());
-            }
-            model.addAttribute("columns", columnChoices);
-            model.addAttribute("title", "Events with " + columnChoices.get(searchType) + ": " + searchTerm);
-            model.addAttribute("events", events);
-
-            return "search";
-        }
+    @RequestMapping("")
+    public String search(Model model) {
+        model.addAttribute("columns", columnChoices);
+        return "search";
     }
+
+    @PostMapping("results")
+    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm) {
+        Iterable<Event> events;
+
+        if (searchTerm.toLowerCase().equals("all") || searchTerm.equals("")) {
+            events = eventRepository.findAll();
+        } else {
+            events = EventData.findByColumnAndValue(searchType, searchTerm, eventRepository.findAll());
+        }
+        model.addAttribute("columns", columnChoices);
+        model.addAttribute("title", "Events with " + columnChoices.get(searchType) + ": " + searchTerm);
+        model.addAttribute("events", events);
+
+        return "search";
+    }
+}
+
 
