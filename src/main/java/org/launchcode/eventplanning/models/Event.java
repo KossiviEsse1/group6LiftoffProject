@@ -1,5 +1,7 @@
 package org.launchcode.eventplanning.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +16,16 @@ public class Event {
     private String name;
     private String location;
     private String description;
+
+    public Event(){
+    }
+
+    public Event(int id, String name, String location, String description) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.description = description;
+    }
 
     public int getId() {
         return id;
@@ -46,4 +58,5 @@ public class Event {
     public void setDescription(java.lang.String description) {
         this.description = description;
     }
+
 }
