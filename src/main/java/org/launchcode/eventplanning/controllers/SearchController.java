@@ -45,11 +45,16 @@ import java.util.List;
         } else {
             events = EventData.findByColumnAndValue(searchType, searchTerm, eventRepository.findAll());
         }
-        model.addAttribute("columns", columnChoices);
-        model.addAttribute("title", "Events with " + columnChoices.get(searchType) + ": " + searchTerm);
-        model.addAttribute("events", events);
+        if (events.toString().length() > 0) {
+            model.addAttribute("columns", columnChoices);
+            model.addAttribute("title", "Events with " + columnChoices.get(searchType) + ": " + searchTerm);
+            model.addAttribute("events", events);
 
-        return "search";
+            return "search";
+        } else {
+
+            return "error";
+        }
     }
 }
 
