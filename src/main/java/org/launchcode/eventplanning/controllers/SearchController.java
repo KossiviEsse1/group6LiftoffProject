@@ -10,12 +10,15 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
-    @RequestMapping("search")
-    public class SearchController {
+@RequestMapping("search")
+public class SearchController {
 
     @Autowired
     private EventRepository eventRepository;
@@ -45,13 +48,25 @@ import java.util.List;
         } else {
             events = EventData.findByColumnAndValue(searchType, searchTerm, eventRepository.findAll());
         }
-            model.addAttribute("columns", columnChoices);
-            //model.addAttribute("title", "Events with " + columnChoices.get(searchType) + ": " + searchTerm);
-            model.addAttribute("title", "Search Results: ");
+        model.addAttribute("columns", columnChoices);
+        //model.addAttribute("title", "Events with " + columnChoices.get(searchType) + ": " + searchTerm);
+        model.addAttribute("title", "Search Results: ");
+        List<Event> result = StreamSupport.stream(events.spliterator(), false)
+                .collect(Collectors.toList());
+
+        if (result.isEmpty()){
             model.addAttribute("events", events);
-            return "search";
+            model.addAttribute("message", "No Results Found");
+        }else{
+            model.addAttribute("events", result);
+            model.addAttribute("message", null);
         }
+        return "search";
+
     }
+}
+
+
 
 
 
