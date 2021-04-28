@@ -9,19 +9,13 @@
     <ul>
         <li th:each="event : ${events}">
             <a style="font-size:35px" th:text="${event.name}"></a>
-            <a th:id="${event.id}" style="font-size:15px" onclick="showDetails() ">View Details</a>
+            <a>View Details</a>
+            <a th:href="@{'/update/' + ${event.id}}">Edit</a>
         </li>
     </ul>
 <p>
     <a th:href="'/add'">Create A New Event</a>
 </p>
 
-<script>
-    function showDetails(){
-        var details = document.createElement("P");
-        details.innerHTML="Test";
-        document.getElementById("$event.id").appendChild(details);
-    }
-</script>
 </body>
 </html>
