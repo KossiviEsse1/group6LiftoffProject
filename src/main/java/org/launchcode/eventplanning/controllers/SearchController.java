@@ -29,7 +29,7 @@ import java.util.HashMap;
 
     }
 
-        @RequestMapping("")
+    @RequestMapping("")
         public String search(Model model) {
             model.addAttribute("columns", columnChoices);
             return "search";
