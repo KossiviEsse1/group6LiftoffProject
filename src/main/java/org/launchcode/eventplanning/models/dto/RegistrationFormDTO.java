@@ -1,4 +1,5 @@
-package org.launchcode.eventplanning.models.dto;
+package org.launchcode.eventplanning.models.DTO;
+import org.launchcode.eventplanning.models.dto.LoginFormDTO;
 
 public class RegistrationFormDTO extends LoginFormDTO {
     private String verifyPassword;
@@ -10,4 +11,5 @@ public class RegistrationFormDTO extends LoginFormDTO {
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
     }
+
 }
