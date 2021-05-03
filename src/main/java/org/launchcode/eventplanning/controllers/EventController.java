@@ -17,10 +17,10 @@ public class EventController {
     @Autowired
     private EventRepository eventRepository;
 
-    @RequestMapping("")
+    @RequestMapping("events")
     public String index(Model model){
         model.addAttribute("events", eventRepository.findAll());
-        return "index";
+        return "events";
     }
 
     @GetMapping("add")
@@ -69,5 +69,20 @@ public class EventController {
         return "redirect:/";
     }
 
+    @GetMapping("delete/{eventID}")
+    public String displayDeleteEventForm(Model model, @PathVariable int eventID){
+        model.addAttribute("title", "Delete Events");
+        Event event = eventRepository.findById(eventID).orElse(new Event());
+        model.addAttribute("event", event);
+        return "delete";
+    }
+
+    @PostMapping("delete/{eventID}")
+    public String processDeleteEventForm(@RequestParam String yesOrNo, @RequestParam int eventID){
+        if (yesOrNo.equals("yes")) {
+            eventRepository.deleteById(eventID);
+        }
+        return "redirect:/";
+    }
 }
 

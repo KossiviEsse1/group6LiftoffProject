@@ -24,11 +24,22 @@ public class User {
 
         private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+        private String role;
+
         public User() {}
 
-        public User(String username, String password) {
+        public User(String username, String password, String role) {
             this.username = username;
             this.pwHash = encoder.encode(password);
+            this.role = role;
+        }
+
+        public String getRole() {
+                return role;
+        }
+
+        public void setRole(String role) {
+                this.role = role;
         }
 
         public int getId() {

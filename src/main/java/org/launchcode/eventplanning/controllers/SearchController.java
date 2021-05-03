@@ -39,6 +39,7 @@ public class SearchController {
         return "search";
     }
 
+
     @PostMapping("results")
     public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm) {
         Iterable<Event> events;
