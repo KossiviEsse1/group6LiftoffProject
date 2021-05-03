@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<h1>Are you sure you want to delete this event?</h1>
+<form method="post" style="max-width:600px;" th:action="@{'/delete/' + ${event.id}}">
+    <div class="form-group">
+        <label th:for="name">Name:</label>
+        <p th:text="${event.name}"></p>
+    </div>
+
+    <div class="form-group">
+        <label th:for="location">Location:</label>
+        <p th:text="${event.location}"></p>
+    </div>
+
+    <div class="form-group">
+        <label th:for="description">Description:</label>
+        <p th:text="${event.description}"></p>
+    </div>
+
+    <div>
+        <input type="radio" id="yes" name="yesOrNo" value="yes">
+        <label for="yes">Yes</label>
+    </div>
+
+    <div>
+        <input type="radio" id="no" name="yesOrNo" value="no">
+        <label for="no">No</label>
+    </div>
+    <input type="hidden" id="eventID" name="eventID" th:value="${event.id}">
+
+
+    <input type="submit" value="Confirm" />
+</form>
+</body>
+</html>
