@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Event Planner</title>
 </head>
+
 <body>
 <div th:replace="fragments :: page-header"></div>
 <h1>Your Events</h1>
@@ -12,7 +13,8 @@
         <a style="font-size:35px" th:text="${event.name}"></a>
         <a>View Details</a>
         <a th:href="@{'/update/' + ${event.id}}">Edit</a>
+        <a th:href="@{'/delete/' + ${event.id}}">Delete</a>
     </li>
 </ul>
 </body>
-</html>reddi
+</html>

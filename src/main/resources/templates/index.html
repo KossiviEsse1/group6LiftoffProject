@@ -5,7 +5,6 @@
     <title>Event Planning</title>
 </head>
 <body>
-
 <h1>Your Events</h1>
 <ul>
     <li th:each="event : ${events}">
@@ -17,10 +16,7 @@
 <p>
     <a th:href="'/add'">Create A New Event</a>
 </p>
-
-
 <div th:replace="fragments :: page-header"></div>
-
 </body>
 
 </html>
