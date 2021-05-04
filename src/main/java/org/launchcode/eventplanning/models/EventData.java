@@ -34,11 +34,19 @@ public class EventData {
         } else if (fieldName.equals("location")){
             theValue = event.getLocation().toString();
         } else {
-            theValue = event.getDescription().toString();
+            theValue = event.getLocation().toString();
         }
 
         return theValue;
     }
+
+    /**
+     * Search all Event fields for the given term.
+     *
+     * @param value The search term to look for.
+     * @param allEvents The list of events to search.
+     * @return      List of all events with at least one field containing the value.
+     */
     public static ArrayList<Event> findByValue(String value, Iterable<Event> allEvents) {
         String lower_val = value.toLowerCase();
 
@@ -57,6 +65,9 @@ public class EventData {
             }
 
         }
+
         return results;
     }
+
+
 }
