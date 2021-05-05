@@ -84,4 +84,17 @@ public class EventController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("view/")
+    public String displayViewEventForm(Model model, @PathVariable int eventID) {
+        Optional optEvent = eventRepository.findById(eventID);
+        if (optEvent.isPresent()) {
+            Event event = (Event) optEvent.get();
+            model.addAttribute("title", "View Event Details");
+            model.addAttribute("event", event);
+            return "view";
+        }else{
+            return "redirect:../";
+        }
+    }
 }
