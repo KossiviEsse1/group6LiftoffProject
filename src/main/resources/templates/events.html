@@ -11,7 +11,7 @@
 <ul>
     <li th:each="event : ${events}">
         <a style="font-size:35px" th:text="${event.name}"></a>
-        <a>View Details</a>
+        <a th:href="@{'/view/' + ${event.id}}">>View Details</a>
         <a th:href="@{'/update/' + ${event.id}}">Edit</a>
         <a th:href="@{'/delete/' + ${event.id}}">Delete</a>
     </li>
