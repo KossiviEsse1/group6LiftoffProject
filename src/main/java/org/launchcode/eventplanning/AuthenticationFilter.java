@@ -3,6 +3,7 @@ package org.launchcode.eventplanning;
 import org.launchcode.eventplanning.controllers.AuthenticationController;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.UserRepository;
+import org.launchcode.eventplanning.models.dto.LoginFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -19,6 +20,10 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
     UserRepository userRepository;
     @Autowired
     AuthenticationController authenticationController;
+    @Autowired
+    LoginFormDTO loginFormDto;
+
+
     private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css");
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -32,7 +37,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
         // The user is logged in
-        if (user != null) {
+        if (user != null && loginFormDto.getRole() == "organization") {
             return true;
         }
         // The user is NOT logged in
