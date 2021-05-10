@@ -5,8 +5,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -21,6 +24,9 @@ public class User {
 
         @NotNull
         private String pwHash;
+
+        @ManyToMany(mappedBy = "users")
+        private List<Event> events = new ArrayList<>();
 
         private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -52,6 +58,10 @@ public class User {
 
         public boolean isMatchingPassword(String password) {
             return encoder.matches(password, pwHash);
+        }
+
+        public List<Event> getEvents() {
+                return events;
         }
 
 }

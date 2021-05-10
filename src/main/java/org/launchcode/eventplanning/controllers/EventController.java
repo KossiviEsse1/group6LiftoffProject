@@ -1,13 +1,18 @@
 package org.launchcode.eventplanning.controllers;
 
+import org.launchcode.eventplanning.models.DTO.EventUserDTO;
 import org.launchcode.eventplanning.models.Event;
+import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.EventRepository;
+import org.launchcode.eventplanning.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -16,6 +21,9 @@ public class EventController {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping("events")
     public String index(Model model){
@@ -107,5 +115,35 @@ public class EventController {
         }
         Optional<Event> currentEvent2 = eventRepository.findById(eventID);
         return "redirect:/";
+    }
+    @GetMapping("signup")
+    public String displayAddTagForm(@RequestParam Integer eventId, Model model){
+
+        Optional<Event> result = eventRepository.findById(eventId);
+        Event event = result.get();
+        model.addAttribute("event", "Add Event: " + event.getUsers());
+        model.addAttribute("usernames", eventRepository.findAll());
+        EventUserDTO eventUser = new EventUserDTO();
+        eventUser.setEvent(event);
+        model.addAttribute("eventUser", eventUser);
+        return "signup.html";
+    }
+
+    @PostMapping("add-tag")
+    public String processAddTagForm(@ModelAttribute @Valid EventUserDTO eventUser,
+                                    Errors errors,
+                                    Model model){
+
+        if (!errors.hasErrors()) {
+            Event event = eventUser.getEvent();
+            User user = eventUser.getUser();
+            if (!event.getUsers().contains(user)){
+                event.addUser(user);
+                eventRepository.save(event);
+            }
+            return "redirect:detail?userId=" + user.getId();
+        }
+
+        return "redirect:signup";
     }
 }

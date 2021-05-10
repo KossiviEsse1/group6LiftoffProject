@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<!--<head th:replace="fragments :: head"></head>-->
+<body class="container">
+
+<!--<header th:replace="fragments :: header"></header>-->
+
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" th:field="${eventUser.event}">
+        <select th:field="${eventUser.tag}">
+            <option th:each="user : ${users}"
+                    th:value="${user.id}"
+                    th:text="${user.name}"
+            ></option>
+        </select>
+    </div>
+
+</form>
+
+</body>
+</html>

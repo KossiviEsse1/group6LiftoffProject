@@ -5,6 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -26,6 +29,9 @@ public class Event {
         this.location = location;
         this.description = description;
     }
+
+    @ManyToMany
+    private final List<User> users = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -57,6 +63,15 @@ public class Event {
 
     public void setDescription(java.lang.String description) {
         this.description = description;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    //adding user
+    public void addUser(User user){
+        this.users.add(user);
     }
 
 }
