@@ -35,10 +35,12 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
         // The user is logged in
-        if (user != null && user.getRole().equals("organization")) {
+        if (user != null && user.getRole().equals("organization")){
+            return true;
+        //if (user != null && user.getRole().equals("organization")) {
                 //if(user.getRole().equals("organization")){
-                    return true;
-               //TestTestuser }//else{
+                   // return true;
+               //}//else{
                    // response.sendRedirect("/login");
                // }
             }

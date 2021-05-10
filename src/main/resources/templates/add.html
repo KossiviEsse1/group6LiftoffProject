@@ -5,7 +5,8 @@
 </head>
 <body>
 <div th:replace="fragments :: page-header"></div>
-    <div sec:authorize="hasRole('organization')">
+  <!--  <div sec:authorize="hasRole('organization')"> -->
+<!--<h2 th:if = '${userSelection.equals("organization")}'>You can do better!</h2>-->
 
         <h1>Create Event</h1>
         <form method="post" style="max-width:600px;">

@@ -1,6 +1,7 @@
 package org.launchcode.eventplanning.controllers;
 
 import org.launchcode.eventplanning.models.Event;
+import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.EventRepository;
 import org.launchcode.eventplanning.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
