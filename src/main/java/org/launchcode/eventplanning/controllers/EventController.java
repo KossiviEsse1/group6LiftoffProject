@@ -2,6 +2,7 @@ package org.launchcode.eventplanning.controllers;
 
 import org.launchcode.eventplanning.models.Event;
 import org.launchcode.eventplanning.models.data.EventRepository;
+import org.launchcode.eventplanning.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,23 +14,22 @@ import java.util.Optional;
 
 @Controller
 public class EventController {
-
     @Autowired
     private EventRepository eventRepository;
-
+    @Autowired
+    private UserRepository userRepository;
     @RequestMapping("events")
     public String index(Model model){
         model.addAttribute("events", eventRepository.findAll());
         return "events";
     }
-
     @GetMapping("add")
     public String displayAddEventForm(Model model) {
         model.addAttribute("title", "Create Event");
+
         model.addAttribute(new Event());
         return "add";
     }
-
     @PostMapping("add")
     public String processAddEventForm(@ModelAttribute Event newEvent,
                                       Errors errors, Model model) {
@@ -40,7 +40,6 @@ public class EventController {
         eventRepository.save(newEvent);
         return "redirect:";
     }
-
     @GetMapping("update/{eventID}")
     public String displayUpdateEventForm(Model model, @PathVariable int eventID){
         Optional optEvent = eventRepository.findById(eventID);
@@ -52,8 +51,6 @@ public class EventController {
             return "redirect:../";
         }
     }
-
-
     @PostMapping("update/{eventID}")
     public String processUpdateEventForm(@ModelAttribute Event currentEvent,
                                       Errors errors, Model model, @PathVariable int eventID) {
@@ -68,7 +65,6 @@ public class EventController {
         eventRepository.save(currentEvent1);
         return "redirect:/";
     }
-
     @GetMapping("delete/{eventID}")
     public String displayDeleteEventForm(Model model, @PathVariable int eventID){
         model.addAttribute("title", "Delete Events");
@@ -76,7 +72,6 @@ public class EventController {
         model.addAttribute("event", event);
         return "delete";
     }
-
     @PostMapping("delete/{eventID}")
     public String processDeleteEventForm(@RequestParam String yesOrNo, @RequestParam int eventID){
         if (yesOrNo.equals("yes")) {
@@ -84,7 +79,6 @@ public class EventController {
         }
         return "redirect:/";
     }
-
     @GetMapping("view/{eventID}")
     public String displayViewEventForm(Model model, @PathVariable int eventID) {
         Optional optEvent = eventRepository.findById(eventID);

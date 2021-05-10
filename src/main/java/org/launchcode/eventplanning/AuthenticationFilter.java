@@ -4,9 +4,9 @@ import org.launchcode.eventplanning.controllers.AuthenticationController;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.UserRepository;
 import org.launchcode.eventplanning.models.dto.LoginFormDTO;
+import org.launchcode.eventplanning.models.dto.RegistrationFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,11 +20,9 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
     UserRepository userRepository;
     @Autowired
     AuthenticationController authenticationController;
-    @Autowired
-    LoginFormDTO loginFormDto;
-
 
     private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css");
+
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
@@ -37,19 +35,24 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         User user = authenticationController.getUserFromSession(session);
         // The user is logged in
-        if (user != null && loginFormDto.getRole() == "organization") {
-            return true;
-        }
-        // The user is NOT logged in
-        response.sendRedirect("/login");
-        return false;
-    }
-    private static boolean isWhitelisted(String path) {
-        for (String pathRoot : whitelist) {
-            if (path.startsWith(pathRoot)) {
-                return true;
+        if (user != null && user.getRole().equals("organization")) {
+                //if(user.getRole().equals("organization")){
+                    return true;
+               //TestTestuser }//else{
+                   // response.sendRedirect("/login");
+               // }
             }
+            // The user is NOT logged in
+            response.sendRedirect("/login");
+            return false;
         }
-        return false;
+        private static boolean isWhitelisted (String path){
+            for (String pathRoot : whitelist) {
+                if (path.startsWith(pathRoot)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
-}
+
