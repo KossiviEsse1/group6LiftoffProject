@@ -108,5 +108,19 @@ public class EventController {
         Optional<Event> currentEvent2 = eventRepository.findById(eventID);
         return "redirect:/";
     }
+
+    @GetMapping("view/{eventId}")
+    public String displayViewJob(Model model, @PathVariable int eventId) {
+
+        Optional optEvent = eventRepository.findById(eventId);
+        if (optEvent.isPresent()) {
+            Event event = (Event) optEvent.get();
+            model.addAttribute("event", event);
+            return "view";
+        } else {
+            return "redirect:../";
+        }
+    }
+
 }
 
