@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<nav th:replace="fragments :: page-header"></nav>
-
-<body class="container  body-content">
-<h1 th:text="${'Event '+ event.id +': ' + event.name}">Default Title</h1>
-
-<div class="event-details">
-    <p th:text="${'ID: ' + event.id}"></p>
-    <p th:text="${'Name: ' + event.name}"></p>
-    <p th:text="${'Description: ' + event.description}"></p>
-</div>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments :: page-header"></div>
+<h1 th:text="${event.name}">Default Title</h1>
+<p th:text="${'Location: ' + event.location}"}></p>
+<p th:text="${'Description: ' + event.description}"}></p>
 
 
 </body>
