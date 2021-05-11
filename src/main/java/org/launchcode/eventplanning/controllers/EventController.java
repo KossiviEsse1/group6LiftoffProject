@@ -25,6 +25,8 @@ public class EventController {
     @Autowired
     private UserRepository userRepository;
 
+
+
     @RequestMapping("events")
     public String index(Model model){
         model.addAttribute("events", eventRepository.findAll());
@@ -116,20 +118,22 @@ public class EventController {
         Optional<Event> currentEvent2 = eventRepository.findById(eventID);
         return "redirect:/";
     }
+
     @GetMapping("signup")
     public String displayAddTagForm(@RequestParam Integer eventId, Model model){
-
         Optional<Event> result = eventRepository.findById(eventId);
         Event event = result.get();
         model.addAttribute("event", "Add Event: " + event.getUsers());
-        model.addAttribute("usernames", eventRepository.findAll());
+        model.addAttribute("usernames", userRepository.findAll());
         EventUserDTO eventUser = new EventUserDTO();
         eventUser.setEvent(event);
         model.addAttribute("eventUser", eventUser);
-        return "signup.html";
+        return "redirect:../";
     }
 
-    @PostMapping("add-tag")
+
+
+    @PostMapping("signup")
     public String processAddTagForm(@ModelAttribute @Valid EventUserDTO eventUser,
                                     Errors errors,
                                     Model model){
@@ -141,9 +145,8 @@ public class EventController {
                 event.addUser(user);
                 eventRepository.save(event);
             }
-            return "redirect:detail?userId=" + user.getId();
+            return "redirect:detail?eventId=" + event.getId();
         }
-
-        return "redirect:signup";
+        return "redirect:/";
     }
 }
