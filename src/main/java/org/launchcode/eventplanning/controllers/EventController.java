@@ -32,11 +32,16 @@ public class EventController {
         return "events";
     }
     @GetMapping("add")
-    public String displayAddEventForm(Model model) {
-        model.addAttribute("title", "Create Event");
-
-        model.addAttribute(new Event());
-        return "add";
+    public String displayAddEventForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        model.addAttribute("user", authenticationController.getUserFromSession(session));
+        User user = authenticationController.getUserFromSession(session);
+        if(user.getRole().equals("organization")) {
+            model.addAttribute("title", "Create Event");
+            model.addAttribute(new Event());
+            return "add";
+        }
+        return "redirect:";
     }
     @PostMapping("add")
     public String processAddEventForm(@ModelAttribute Event newEvent,
