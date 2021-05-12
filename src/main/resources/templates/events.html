@@ -7,6 +7,7 @@
 
 <body>
 <div th:replace="fragments :: page-header"></div>
+<p th:text = "${user.id}"></p>
 <h1>Your Events</h1>
 <ul>
     <li th:each="event : ${events}">
