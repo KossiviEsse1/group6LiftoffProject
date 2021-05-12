@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -25,11 +27,14 @@ public class EventController {
     @Autowired
     private UserRepository userRepository;
 
-
+    @Autowired
+    private AuthenticationController authenticationController;
 
     @RequestMapping("events")
-    public String index(Model model){
+    public String index(Model model, HttpServletRequest request){
         model.addAttribute("events", eventRepository.findAll());
+        HttpSession session = request.getSession();
+        model.addAttribute("user", authenticationController.getUserFromSession(session));
         return "events";
     }
 
