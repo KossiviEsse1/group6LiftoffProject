@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta charset="UTF-8"/>
     <title>Event Planning</title>
@@ -18,12 +18,14 @@
               <li><a th:href="@{/login}">Log In</a></li>
               <li><a href="/search">Search Events</a></li>
               <li><a href="/events">All Events</a></li>
-              <li><a href="/add">Create Event</a></li>
-              <li><a th:href="@{/logout}">Log Out</a></li>
-          </ul>
-        </div>
-    </div>
-</div>
+             <!-- <li><a th:href="/add(action=${user.role} ? 'organization' : 'show_public'))}">">Create Event</a></li> -->
+              <!-- <li><a href="/add"  sec:authorize="hasRole('organization')">Create Event</a></li> -->
+               <li><a href="/add">Create Event</a></li>
+                <li><a th:href="@{/logout}">Log Out</a></li>
+            </ul>
 
-</body>
-</html>
+          </div>
+      </div>
+  </div>
+  </body>
+  </html>

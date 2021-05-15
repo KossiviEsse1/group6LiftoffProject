@@ -7,12 +7,13 @@
 
 <body>
 <div th:replace="fragments :: page-header"></div>
-<p th:text = "${user.id}"></p>
+<!-- <a href="/add">Create Event</a> -->
+<!-- <p th:text = "${user.id}"></p> -->
 <h1>Your Events</h1>
 <ul>
     <li th:each="event : ${events}">
         <a style="font-size:35px" th:text="${event.name}"></a>
-        <a th:href="@{'/view/' + ${event.id}}">>View Details</a>
+        <a th:href="@{'/view/' + ${event.id}}">View Details</a>
         <a th:href="@{'/update/' + ${event.id}}">Edit</a>
         <a th:href="@{'/delete/' + ${event.id}}">Delete</a>
     </li>

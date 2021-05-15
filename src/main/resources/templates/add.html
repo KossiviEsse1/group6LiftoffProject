@@ -7,8 +7,8 @@
 <div th:replace="fragments :: page-header"></div>
   <!--  <div sec:authorize="hasRole('organization')"> -->
 <!--<div th:if = '${user.role.equals("organization")}'>You can do better!</div>-->
-
         <h1>Create Event</h1>
+        <p th:text = "${user.id}"></p>
         <form method="post" style="max-width:600px;">
             <div class="form-group">
                 <label th:for="name">Name</label>
