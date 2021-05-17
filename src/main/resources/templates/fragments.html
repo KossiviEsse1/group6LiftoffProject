@@ -7,7 +7,6 @@
     <script th:src="@{/script.js}"></script>
 </head>
 <body>
-
 <div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -20,12 +19,12 @@
               <li><a href="/events">All Events</a></li>
              <!-- <li><a th:href="/add(action=${user.role} ? 'organization' : 'show_public'))}">">Create Event</a></li> -->
               <!-- <li><a href="/add"  sec:authorize="hasRole('organization')">Create Event</a></li> -->
-               <li><a href="/add">Create Event</a></li>
-                <li><a th:href="@{/logout}">Log Out</a></li>
-            </ul>
+               <li th:if = "${user.getRole().equals('organization')}"><a href="/add">Create Event</a></li>
+                   <li><a th:href="@{/logout}">Log Out</a></li>
+               </ul>
 
-          </div>
-      </div>
-  </div>
-  </body>
-  </html>
+             </div>
+         </div>
+     </div>
+     </body>
+     </html>
