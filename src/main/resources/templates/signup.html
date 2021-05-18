@@ -10,7 +10,7 @@
 <form method="post">
     <div class="form-group">
         <input type="hidden" th:field="${eventUser.event}">
-        <select th:field="${eventUser.User}">
+        <select th:field="${eventUser.user}">
             <option th:each="user : ${users}"
                     th:value="${user.id}"
                     th:text="${user.name}"

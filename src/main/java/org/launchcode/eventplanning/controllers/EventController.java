@@ -4,6 +4,7 @@ import org.launchcode.eventplanning.models.DTO.EventUserDTO;
 import org.launchcode.eventplanning.models.Event;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.EventRepository;
+import org.launchcode.eventplanning.models.data.EventUserRepository;
 import org.launchcode.eventplanning.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -26,6 +27,9 @@ public class EventController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventUserRepository eventUserRepository;
 
     @Autowired
     private AuthenticationController authenticationController;
@@ -124,25 +128,41 @@ public class EventController {
         return "redirect:/";
     }
 
-    @GetMapping("signup")
-    public String displayAddTagForm(@RequestParam Integer eventId, Model model){
+/*    @GetMapping("signup")
+    public String signingUp(@RequestParam Integer eventId, Model model){
         Optional<Event> result = eventRepository.findById(eventId);
         Event event = result.get();
-        model.addAttribute("event", "Add Event: " + event.getUsers());
-        model.addAttribute("usernames", userRepository.findAll());
+        model.addAttribute("title", "Add Event: " + event.getUsers());
+        model.addAttribute("users", eventUserRepository.findAll());
         EventUserDTO eventUser = new EventUserDTO();
         eventUser.setEvent(event);
         model.addAttribute("eventUser", eventUser);
-        return "redirect:../";
+        return "signup";
+    }*/
+
+    @GetMapping("signup/{eventId}")
+    public String signingUp(@PathVariable int eventId,
+                            Model model,
+                            HttpServletRequest request){
+
+        Optional<Event> result = eventRepository.findById(eventId);
+        Event event = result.get();
+        HttpSession session = request.getSession();
+        model.addAttribute("user", authenticationController.getUserFromSession(session));
+        User user = authenticationController.getUserFromSession(session);
+        if(user.getRole().equals("volunteer")){
+            model.addAttribute("title", "Add Event: " + event.getUsers());
+            EventUserDTO eventUser = new EventUserDTO();
+            eventUser.setEvent(event);
+            model.addAttribute("eventUser", eventUser);
+        }
+        return "redirect:";
     }
 
-
-
-    @PostMapping("signup")
-    public String processAddTagForm(@ModelAttribute @Valid EventUserDTO eventUser,
+    @PostMapping("signup/{eventId}")
+    public String signingUp2(@ModelAttribute @Valid EventUserDTO eventUser,
                                     Errors errors,
                                     Model model){
-
         if (!errors.hasErrors()) {
             Event event = eventUser.getEvent();
             User user = eventUser.getUser();
