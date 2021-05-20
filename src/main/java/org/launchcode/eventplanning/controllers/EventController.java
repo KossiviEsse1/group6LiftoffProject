@@ -98,28 +98,4 @@ public class EventController {
             return "redirect:../";
         }
     }
-    @PostMapping("view/{eventID}")
-    public String processViewEventForm(@ModelAttribute Event currentEvent,
-                                         Errors errors, Model model, @PathVariable int eventID) {
-        if (errors.hasErrors()){
-            model.addAttribute("title","View Event");
-            return "view";
-        }
-        Optional<Event> currentEvent2 = eventRepository.findById(eventID);
-        return "redirect:/";
-    }
-
-    @GetMapping("view/{eventId}")
-    public String displayViewJob(Model model, @PathVariable int eventId) {
-
-        Optional optEvent = eventRepository.findById(eventId);
-        if (optEvent.isPresent()) {
-            Event event = (Event) optEvent.get();
-            model.addAttribute("event", event);
-            return "view";
-        } else {
-            return "redirect:../";
-        }
-    }
-
 }
