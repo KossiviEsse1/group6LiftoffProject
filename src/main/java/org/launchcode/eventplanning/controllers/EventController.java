@@ -28,13 +28,12 @@ public class EventController {
     public String index(Model model, HttpServletRequest request){
         model.addAttribute("events", eventRepository.findAll());
         HttpSession session = request.getSession();
-        model.addAttribute("user", authenticationController.getUserFromSession(session));
         return "events";
     }
     @GetMapping("add")
     public String displayAddEventForm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        model.addAttribute("user", authenticationController.getUserFromSession(session));
+
         User user = authenticationController.getUserFromSession(session);
         if(user.getRole().equals("organization")) {
             model.addAttribute("title", "Create Event");

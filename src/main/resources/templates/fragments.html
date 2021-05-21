@@ -14,17 +14,15 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul>
-              <li><a th:href="@{/login}">Log In</a></li>
+              <li th:unless = "${session.role != null}"><a th:href="@{/login}">Log In</a></li>
               <li><a href="/search">Search Events</a></li>
               <li><a href="/events">All Events</a></li>
-             <!-- <li><a th:href="/add(action=${user.role} ? 'organization' : 'show_public'))}">">Create Event</a></li> -->
-              <!-- <li><a href="/add"  sec:authorize="hasRole('organization')">Create Event</a></li> -->
-               <li th:if = "${user.getRole().equals('organization')}"><a href="/add">Create Event</a></li>
-                   <li><a th:href="@{/logout}">Log Out</a></li>
-               </ul>
+              <li th:if = "${session != null && session.role == 'organization'}"><a href="/add">Create Event</a></li>
+              <li th:unless = "${session.role == null}"><a th:href="@{/logout}">Log Out</a></li>
 
-             </div>
-         </div>
-     </div>
-     </body>
-     </html>
+          </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
