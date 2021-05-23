@@ -33,6 +33,10 @@
                 <p th:text="${'Name: ' + event.name}"></p>
                 <p th:text="${'Location: ' + event.location}"></p>
                 <p th:text="${'Description: ' + event.description}"> </p>
+                <p>
+                    <a>Event Name: </a>
+                    <a th:href="@{'/view/' + ${event.id}}" th:text="${event.name}"></a>
+                </p>
             </td>
         </tr>
     </table>
