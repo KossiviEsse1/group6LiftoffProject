@@ -29,8 +29,6 @@ public class SearchController {
         columnChoices.put("all", "All");
         columnChoices.put("name", "Name");
         columnChoices.put("location", "Location");
-        //columnChoices.put("description", "Description");
-
     }
 
     @RequestMapping("")
@@ -38,7 +36,6 @@ public class SearchController {
         model.addAttribute("columns", columnChoices);
         return "search";
     }
-
 
     @PostMapping("results")
     public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm) {

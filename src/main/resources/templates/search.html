@@ -3,14 +3,10 @@
 <head th:replace="fragments :: head">
 </head>
 <body>
-
 <div th:replace="fragments :: page-header"></div>
-
 <div class="container body-content">
-
     <form th:action="@{/search/results}" method = "post">
         <h2>Search by:</h2>
-
         <p>
             <span th:each="column : ${columns}">
                 <input
@@ -19,34 +15,27 @@
                   th:id="${column.key}"
                   th:value="${column.key}"
                   th:checked="${column.key == 'all'}"/>
-          <label th:for="${column.key}" th:text="${column.value}"></label>
-      </span>
-
-  </p>
-
-        <p>
+                <label th:for="${column.key}" th:text="${column.value}"></label>
+            </span>
+      </p>
+       <p>
             <label for="searchTerm">Keyword:</label>
             <input type="text" name="searchTerm" id="searchTerm" />
-        </p>
-
-        <input type="submit" value="Search" />
+       </p>
+            <input type="submit" value="Search" />
     </form>
-
     <hr />
     <h3 th:text="${title}">Events</h3>
     <h3 th:text="${message}"></h3>
     <table class="event-listing">
         <tr th:each="event : ${events}">
             <td>
-                <!--<p th:text="${'Event Id: ' + event.id}"></p>-->
                 <p th:text="${'Name: ' + event.name}"></p>
                 <p th:text="${'Location: ' + event.location}"></p>
                 <p th:text="${'Description: ' + event.description}"> </p>
             </td>
         </tr>
     </table>
-
 </div>
-
 </body>
 </html>
