@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 <div th:replace="fragments :: page-header"></div>
 <h1 th:text="${event.name}">Default Title</h1>

@@ -26,6 +26,7 @@ public class EventController {
 
     @RequestMapping("events")
     public String index(Model model, HttpServletRequest request){
+        model.addAttribute("title", "Events");
         model.addAttribute("events", eventRepository.findAll());
         HttpSession session = request.getSession();
         return "events";
@@ -58,6 +59,7 @@ public class EventController {
         if (optEvent.isPresent()) {
             Event event = (Event) optEvent.get();
         model.addAttribute("event", event);
+            model.addAttribute("title", "Update");
         return "update";
         } else {
             return "redirect:../";

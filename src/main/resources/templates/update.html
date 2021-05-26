@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 <h1 th:text="${'Update ' + event.name}">Default Title</h1>
     <form method="post" style="max-width:600px;">
