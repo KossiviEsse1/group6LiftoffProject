@@ -2,68 +2,67 @@ package org.launchcode.eventplanning.models;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+@Table(name = "USER")
+public class User /*extends AbstractEntity*/{
 
-        @Id
-        @GeneratedValue
-        private int id;
+    @Id
+    @GeneratedValue
+    private int id;
 
-        @NotNull
-        @Size(min=3, max=15)
-        private String username;
+    @NotNull
+    @Size(min=3, max=15)
+    private String username;
 
-        @NotNull
-        private String pwHash;
+    @NotNull
+    private String pwHash;
 
-        @ManyToMany(mappedBy = "users")
-        private List<Event> events = new ArrayList<>();
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private String role;
 
-        private String role;
+    @ManyToMany(mappedBy = "volunteers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private final List<Event> events = new ArrayList<>();
 
-        public User() {}
-
-        public User(String username, String password, String role) {
+   public User(String username, String password, String role) {
             this.username = username;
             this.pwHash = encoder.encode(password);
             this.role = role;
         }
 
-        public String getRole() {
+    public User() { }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getRole() {
                 return role;
         }
 
-        public void setRole(String role) {
+    public void setRole(String role) {
                 this.role = role;
         }
 
-        public int getId() {
-            return id;
-        }
-
-        public String getUsername() {
+    public String getUsername() {
                 return username;
         }
 
-        public boolean isMatchingPassword(String password) {
+    public boolean isMatchingPassword(String password) {
             return encoder.matches(password, pwHash);
         }
 
-        public List<Event> getEvents() {
-                return events;
-        }
+    public List<Event> getEvents() {
+        return events;
+    }
 
 }
+
 
 

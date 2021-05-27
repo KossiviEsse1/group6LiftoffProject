@@ -24,6 +24,8 @@ public class AuthenticationController {
     private UserRepository userRepository;
 
     private static final String userSessionKey = "user";
+    private static final String userSessionRole = "role";
+
 
     public User getUserFromSession(HttpSession session) {
         Integer userId = (Integer) session.getAttribute(userSessionKey);
@@ -39,6 +41,7 @@ public class AuthenticationController {
 
     private static void setUserInSession(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user.getId());
+        session.setAttribute(userSessionRole, user.getRole());
     }
 
     @GetMapping("/register")
