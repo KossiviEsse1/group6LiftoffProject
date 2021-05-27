@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -25,9 +24,9 @@ public class EventController {
     @Autowired
     private AuthenticationController authenticationController;
 
-
     @RequestMapping("events")
     public String index(Model model, HttpServletRequest request){
+        model.addAttribute("title", "Events");
         model.addAttribute("events", eventRepository.findAll());
         HttpSession session = request.getSession();
         return "events";
@@ -35,6 +34,7 @@ public class EventController {
     @GetMapping("add")
     public String displayAddEventForm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
+
         User user = authenticationController.getUserFromSession(session);
         if(user.getRole().equals("organization")) {
             model.addAttribute("title", "Create Event");
@@ -59,6 +59,7 @@ public class EventController {
         if (optEvent.isPresent()) {
             Event event = (Event) optEvent.get();
             model.addAttribute("event", event);
+            model.addAttribute("title", "Update");
             return "update";
         } else {
             return "redirect:../";
@@ -143,3 +144,5 @@ public class EventController {
         return "redirect:events";
     }*/
 }
+
+

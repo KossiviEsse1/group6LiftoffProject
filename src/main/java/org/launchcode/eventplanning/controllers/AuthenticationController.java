@@ -26,7 +26,6 @@ public class AuthenticationController {
     private static final String userSessionKey = "user";
     private static final String userSessionRole = "role";
 
-
     public User getUserFromSession(HttpSession session) {
         Integer userId = (Integer) session.getAttribute(userSessionKey);
         if (userId == null) {
@@ -93,7 +92,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO,
-                                   Errors errors, HttpServletRequest request,
+                                   Errors errors, HttpServletRequest request,HttpSession session,
                                    Model model) {
 
         if (errors.hasErrors()) {

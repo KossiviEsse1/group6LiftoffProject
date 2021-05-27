@@ -26,7 +26,6 @@ public class EventData {
 
         return results;
     }
-
     public static String getFieldValue(Event event, String fieldName){
         String theValue;
         if (fieldName.equals("name")){
@@ -39,7 +38,6 @@ public class EventData {
 
         return theValue;
     }
-
     /**
      * Search all Event fields for the given term.
      *
@@ -65,9 +63,6 @@ public class EventData {
             }
 
         }
-
         return results;
     }
-
-
 }

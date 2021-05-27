@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta charset="UTF-8"/>
     <title>Event Planning</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <script th:src="@{/js/script.js}"></script>
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
+    <title th:text="${title}"></title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 </head>
-<body>
 
-<div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="page-header">
     <div class="container">
-        <div class="navbar-header">
-            <a th:href="@{/}" class="navbar-brand">Event Planning</a>
-        </div>
         <div class="navbar-collapse collapse">
-          <ul>
-              <li><a th:href="@{/login}">Log In</a></li>
+          <ul class= "nav navbar-nav">
+              <li th:unless = "${session.role != null}"><a  th:href="@{/login}">Log In</a></li>
               <li><a href="/search">Search Events</a></li>
-              <li><a href="/events">All Events</a></li>
-              <li><a href="/add">Create Event</a></li>
-              <li><a th:href="@{/logout}">Log Out</a></li>
+              <li><a  href="/events">All Events</a></li>
+              <li th:if = "${session != null && session.role == 'organization'}"><a href="/add">Create Event</a></li>
+              <li th:unless = "${session.role == null}"><a th:href="@{/logout}">Log Out</a></li>
           </ul>
         </div>
     </div>
 </div>
-
-
-
+</nav>
 </body>
 </html>
