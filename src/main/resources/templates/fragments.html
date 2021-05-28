@@ -11,7 +11,7 @@
 </head>
 
 <body>
-          <ul class= "navbar navbar-expand-lg navbar-light bg-light nav nav-tabs" th:fragment="page-header">
+          <ul class= "navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top nav nav-tabs" th:fragment="page-header">
               <li class ="nav-item" th:unless = "${session.role != null}"><a class="nav-link" th:href="@{/login}">Log In</a></li>
               <li class ="nav-item"><a class="nav-link" href="/search">Search Events</a></li>
               <li class ="nav-item"><a class="nav-link" href="/events">All Events</a></li>
