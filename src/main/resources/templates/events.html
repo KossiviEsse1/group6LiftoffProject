@@ -3,6 +3,7 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <div th:replace="fragments :: page-header"></div>
+<br>
 <h1>Your Events</h1>
 <ul>
     <li th:each="event : ${events}">
@@ -15,5 +16,27 @@
         </a>
     </li>
 </ul>
+<table>
+    <tr th:each="event : ${events}">
+        <div class ="card w-25">
+            <h4 class = "card-header" th:text="${event.name}"></h4>
+            <br>
+            <div class="card-body">
+                <div class="row gx-10">
+                    <div class="col-md-2">
+                        <a class="btn btn-primary btn-sm" th:href="@{'/view/' + ${event.id}}">View Details</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-primary btn-sm" th:href="@{'/update/' + ${event.id}}">Edit</a>
+                    </div>
+                </div>
+                <br>
+                <a class="col-md-4 btn btn-danger btn-sm" th:href="@{'/delete/' + ${event.id}}">Delete</a>
+                <br>
+            </div>
+        </div>
+        <br>
+    </tr>
+</table>
 </body>
 </html>
