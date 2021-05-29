@@ -11,10 +11,7 @@
         <a th:href="@{'/update/' + ${event.id}}">Edit</a>
         <a th:href="@{'/delete/' + ${event.id}}">Delete</a>
         <a th:if = "${session != null && session.role == 'volunteer'}">
-            <form action="signup.php" method ="post">
-                <input type="hidden" id="eventID" name="eventID" th:value="${event.id}">
-                <input type="submit" value="SignUp">
-            </form>
+            <a th:href="'/signup?eventID=' + ${event.id}">Sign Up</a>
         </a>
     </li>
 </ul>

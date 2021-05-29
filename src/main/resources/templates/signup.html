@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: page-header"></header>
+
+<form method="post">
+    <div class="form-group">
+        <h2>You are signing up for:  </h2>
+        <input type="hidden" th:field="${eventVolunteer}">
+    </div>
+    <input type="submit" class="btn btn-success" value="Sign Up">
+</form>
+
+</body>
+</html>

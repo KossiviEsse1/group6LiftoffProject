@@ -62,6 +62,20 @@ public class User /*extends AbstractEntity*/{
         return events;
     }
 
+    public void addEvent(Event event) {
+        this.events.add(event);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", pwHash='" + pwHash + '\'' +
+                ", role='" + role + '\'' +
+                ", events=" + events +
+                '}';
+    }
 }
 
 

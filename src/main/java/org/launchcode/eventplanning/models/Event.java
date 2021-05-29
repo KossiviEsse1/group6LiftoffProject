@@ -73,6 +73,17 @@ public class Event /*extends AbstractEntity*/ {
         this.volunteers.add(user);
         user.getEvents().add(this);
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                ", volunteers=" + volunteers +
+                '}';
+    }
 }
 
 

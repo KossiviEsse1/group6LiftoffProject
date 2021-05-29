@@ -1,5 +1,6 @@
 package org.launchcode.eventplanning.controllers;
 
+import org.launchcode.eventplanning.models.DTO.EventVolunteerDTO;
 import org.launchcode.eventplanning.models.Event;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.EventRepository;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -100,6 +102,9 @@ public class EventController {
             Event event = (Event) optEvent.get();
             model.addAttribute("title", "View Event Details");
             model.addAttribute("event", event);
+/*
+            model.addAttribute("volunteers", "event.getUsers");
+*/
             return "view";
         }else{
             model.addAttribute("events", eventRepository.findAll());
@@ -107,42 +112,42 @@ public class EventController {
         }
     }
 
-    @PostMapping("signup")
-    public String volunteerSignUp(Model model, @RequestParam int eventID,
+    @GetMapping("signup")
+    public String volunteerSignUp(@RequestParam int eventID,
+                                  Model model,
                                   HttpServletRequest request) {
         HttpSession session = request.getSession();
         User currentlyLoggedInUser = authenticationController.getUserFromSession(session);
-        model.addAttribute("title", "Events");
-        Event event = eventRepository.findById(eventID).orElse(new Event());
-        event.addVolunteer(currentlyLoggedInUser);
-        eventRepository.save(event);
-        model.addAttribute("events", eventRepository.findAll());
-        return "redirect:/event";
-    }
-
-/*    @GetMapping("signup")
-    public String intialSignUp(@RequestParam int eventId, Model model,
-                               HttpServletRequest request){
-        HttpSession session = request.getSession();
-        User currentlyLoggedInUser = authenticationController.getUserFromSession(session);
-        model.addAttribute("title", "Events");
-        Event event = eventRepository.findById(eventId).orElse(new Event());
-        event.addVolunteer(currentlyLoggedInUser);
-       return "redirect:events/signup";
+        Optional<Event> result = eventRepository.findById(eventID);
+        Event event = result.get();
+        model.addAttribute("title", "Volunteer for: " + event.getName());
+        EventVolunteerDTO eventVolunteer = new EventVolunteerDTO();
+        eventVolunteer.setEvent(event);
+        eventVolunteer.setUser(currentlyLoggedInUser);
+        model.addAttribute("eventVolunteer", eventVolunteer);
+        return "signup";
     }
 
     @PostMapping("signup")
-    public String postSignUp(@ModelAttribute Event event,
-                             Errors errors,
-                             Model model){
-        if(!errors.hasErrors()){
-            eventRepository.save(event);
-            model.addAttribute("events", eventRepository.findAll());
-            return "redirect:signup?eventID=" + event.getId();
+    public String processAddTagForm(@ModelAttribute @Valid EventVolunteerDTO eventVolunteer,
+                                    Errors errors,
+                                    Model model){
+
+        if (!errors.hasErrors()) {
+            Event event = eventVolunteer.getEvent();
+            User user = eventVolunteer.getUser();
+            if (!event.getVolunteers().contains(user)){
+                event.addVolunteer(user);
+                eventRepository.save(event);
+                user.addEvent(event);
+                userRepository.save(user);
+            }
+            return "events";
         }
 
-        return "redirect:events";
-    }*/
+        return "events";
+    }
+
 }
 
 
