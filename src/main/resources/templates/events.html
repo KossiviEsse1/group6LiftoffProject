@@ -15,12 +15,12 @@
                     <div class="col-md-2">
                         <a class="btn btn-primary btn-sm" th:href="@{'/view/' + ${event.id}}">View Details</a>
                     </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-primary btn-sm" th:href="@{'/update/' + ${event.id}}">Edit</a>
+                    <div class="col-md-2">
+                        <a class="btn btn-primary btn-sm" th:href="@{'/update/' + ${event.id}}">Edit Event</a>
                     </div>
                 </div>
                 <br>
-                <a class="col-md-4 btn btn-danger btn-sm" th:href="@{'/delete/' + ${event.id}}">Delete</a>
+                <a class="col-md-4 btn btn-danger btn-sm" th:href="@{'/delete/' + ${event.id}}">Delete Event</a>
                 <br>
             </div>
         </div>

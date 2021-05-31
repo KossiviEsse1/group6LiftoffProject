@@ -4,42 +4,49 @@
 </head>
 <body>
 <div th:replace="fragments :: page-header"></div>
-<div class="container body-content">
-    <form th:action="@{/search/results}" method = "post">
-        <h2>Search by:</h2>
-        <p>
-            <span th:each="column : ${columns}">
-                <input
-                        type="radio"
-                        name="searchType"
-                  th:id="${column.key}"
-                  th:value="${column.key}"
-                  th:checked="${column.key == 'all'}"/>
-                <label th:for="${column.key}" th:text="${column.value}"></label>
-            </span>
-      </p>
-       <p>
-            <label for="searchTerm">Keyword:</label>
-            <input type="text" name="searchTerm" id="searchTerm" />
-       </p>
-            <input type="submit" value="Search" />
-    </form>
-    <hr />
-    <h3 th:text="${title}">Events</h3>
-    <h3 th:text="${message}"></h3>
-    <table class="event-listing">
-        <tr th:each="event : ${events}">
-            <td>
-                <p th:text="${'Name: ' + event.name}"></p>
-                <p th:text="${'Location: ' + event.location}"></p>
-                <p th:text="${'Description: ' + event.description}"> </p>
+<br>
+<div>
+    <div class="card w-50">
+        <form th:action="@{/search/results}" method = "post">
+            <h2 class="card-header">Search by:</h2>
+            <div class="card-body">
                 <p>
-                    <a>Event Name: </a>
-                    <a th:href="@{'/view/' + ${event.id}}" th:text="${event.name}"></a>
+                    <span th:each="column : ${columns}">
+                        <input class="form-check-input"
+                                type="radio"
+                                name="searchType"
+                          th:id="${column.key}"
+                          th:value="${column.key}"
+                          th:checked="${column.key == 'all'}"/>
+                        <label  class="form-check-label" th:for="${column.key}" th:text="${column.value}"></label>
+                        <br>
+                    </span>
                 </p>
-            </td>
-        </tr>
-    </table>
+                <p>
+                    <label for="searchTerm">Keyword:</label>
+                    <input type="text" name="searchTerm" id="searchTerm" />
+                </p>
+                <input type="submit" class="btn btn-primary" value="Search" />
+            </div>
+        </form>
+    </div>
+    <br>
+    <div class="card w-50">
+        <h3 class="card-header" th:text="${title}">Events</h3>
+        <h4 class="card-body" th:text="${message}"></h4>
+        <table class="table table-striped">
+            <tr th:each="event : ${events}">
+                <div class="card-w">
+                    <td>
+                        <p>
+                            <a>Event & Details: </a>
+                            <a th:href="@{'/view/' + ${event.id}}" th:text="${event.name}"></a>
+                        </p>
+                    </td>
+                </div>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>
