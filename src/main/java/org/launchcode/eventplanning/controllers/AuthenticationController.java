@@ -1,7 +1,7 @@
 package org.launchcode.eventplanning.controllers;
 
-import org.launchcode.eventplanning.models.dto.LoginFormDTO;
 import org.launchcode.eventplanning.models.DTO.RegistrationFormDTO;
+import org.launchcode.eventplanning.models.dto.LoginFormDTO;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +59,7 @@ public class AuthenticationController {
             model.addAttribute("title", "Register");
             return "register";
         }
+
         User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
 
         if (existingUser != null) {
@@ -127,4 +128,3 @@ public class AuthenticationController {
         return "redirect:/login";
     }
 }
-

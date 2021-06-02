@@ -3,8 +3,6 @@ package org.launchcode.eventplanning;
 import org.launchcode.eventplanning.controllers.AuthenticationController;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.UserRepository;
-import org.launchcode.eventplanning.models.dto.LoginFormDTO;
-import org.launchcode.eventplanning.models.DTO.RegistrationFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;

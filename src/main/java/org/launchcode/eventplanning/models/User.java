@@ -12,70 +12,70 @@ import java.util.List;
 @Table(name = "USER")
 public class User /*extends AbstractEntity*/{
 
-        @Id
-        @GeneratedValue
-        private int id;
+    @Id
+    @GeneratedValue
+    private int id;
 
-        @NotNull
-        @Size(min=3, max=15)
-        private String username;
+    @NotNull
+    @Size(min=3, max=15)
+    private String username;
 
-        @NotNull
-        private String pwHash;
+    @NotNull
+    private String pwHash;
 
-        private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        private String role;
+    private String role;
 
-        @ManyToMany(mappedBy = "volunteers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-        private final List<Event> events = new ArrayList<>();
+    @ManyToMany(mappedBy = "volunteers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private final List<Event> events = new ArrayList<>();
 
-        public User(String username, String password, String role) {
-                this.username = username;
-                this.pwHash = encoder.encode(password);
-                this.role = role;
-        }
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.pwHash = encoder.encode(password);
+        this.role = role;
+    }
 
-        public User() { }
+    public User() { }
 
-        public int getId() {
-                return id;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public String getRole() {
+    public String getRole() {
                 return role;
         }
 
-        public void setRole(String role) {
+    public void setRole(String role) {
                 this.role = role;
         }
 
-        public String getUsername() {
-                return username;
-        }
+    public String getUsername() {
+            return username;
+    }
 
-        public boolean isMatchingPassword(String password) {
-                return encoder.matches(password, pwHash);
-        }
+    public boolean isMatchingPassword(String password) {
+            return encoder.matches(password, pwHash);
+    }
 
-        public List<Event> getEvents() {
-                return events;
-        }
+    public List<Event> getEvents() {
+            return events;
+    }
 
-        public void addEvent(Event event) {
-                this.events.add(event);
-        }
+    public void addEvent(Event event) {
+            this.events.add(event);
+    }
 
-        @Override
-        public String toString() {
-                return "User{" +
-                        "id=" + id +
-                        ", username='" + username + '\'' +
-                        ", pwHash='" + pwHash + '\'' +
-                        ", role='" + role + '\'' +
-                        ", events=" + events +
-                        '}';
-        }
+    @Override
+    public String toString() {
+            return "User{" +
+                    "id=" + id +
+                    ", username='" + username + '\'' +
+                    ", pwHash='" + pwHash + '\'' +
+                    ", role='" + role + '\'' +
+                    ", events=" + events +
+                    '}';
+    }
 }
 
 

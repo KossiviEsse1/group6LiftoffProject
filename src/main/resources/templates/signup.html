@@ -1,23 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
 
-<body>
-<div th:replace="fragments :: page-header"></div>
+<header th:replace="fragments :: page-header"></header>
 
 <form method="post">
     <div class="form-group">
-        <input type="hidden" th:field="${eventUser.event}">
-        <select th:field="${eventUser.user}">
-            <option th:each="user : ${users}"
-                    th:value="${user.id}"
-                    th:text="${user.name}"
-            ></option>
-        </select>
+        <h2>You are signing up for:  </h2>
+        <input type="hidden" th:field="${eventVolunteer}">
     </div>
-    <input type="submit" class="btn btn-success" value="Signup">
+    <input type="submit" class="btn btn-success" value="Sign Up">
 </form>
 
 </body>
