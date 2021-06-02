@@ -2,17 +2,15 @@ package org.launchcode.eventplanning.models;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+@Table(name = "USER")
+public class User /*extends AbstractEntity*/{
 
         @Id
         @GeneratedValue
@@ -25,19 +23,23 @@ public class User {
         @NotNull
         private String pwHash;
 
-        @ManyToMany(mappedBy = "users")
-        private List<Event> events = new ArrayList<>();
-
         private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         private String role;
 
-        public User() {}
+        @ManyToMany(mappedBy = "volunteers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+        private final List<Event> events = new ArrayList<>();
 
         public User(String username, String password, String role) {
-            this.username = username;
-            this.pwHash = encoder.encode(password);
-            this.role = role;
+                this.username = username;
+                this.pwHash = encoder.encode(password);
+                this.role = role;
+        }
+
+        public User() { }
+
+        public int getId() {
+                return id;
         }
 
         public String getRole() {
@@ -48,22 +50,33 @@ public class User {
                 this.role = role;
         }
 
-        public int getId() {
-            return id;
-        }
-
         public String getUsername() {
                 return username;
         }
 
         public boolean isMatchingPassword(String password) {
-            return encoder.matches(password, pwHash);
+                return encoder.matches(password, pwHash);
         }
 
         public List<Event> getEvents() {
                 return events;
         }
 
+        public void addEvent(Event event) {
+                this.events.add(event);
+        }
+
+        @Override
+        public String toString() {
+                return "User{" +
+                        "id=" + id +
+                        ", username='" + username + '\'' +
+                        ", pwHash='" + pwHash + '\'' +
+                        ", role='" + role + '\'' +
+                        ", events=" + events +
+                        '}';
+        }
 }
+
 
 

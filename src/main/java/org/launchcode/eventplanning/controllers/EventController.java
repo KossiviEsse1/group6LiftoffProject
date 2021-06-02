@@ -30,7 +30,7 @@ public class EventController {
 
 
     @RequestMapping("events")
-    public String index(Model model, HttpServletRequest request){
+    public String index(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventRepository.findAll());
         HttpSession session = request.getSession();
         model.addAttribute("title", "Events");
@@ -42,40 +42,43 @@ public class EventController {
         HttpSession session = request.getSession();
 
         User user = authenticationController.getUserFromSession(session);
-        if(user.getRole().equals("organization")) {
+        if (user.getRole().equals("organization")) {
             model.addAttribute("title", "Create Event");
             model.addAttribute(new Event());
             return "add";
         }
         return "redirect:";
     }
+
     @PostMapping("add")
     public String processAddEventForm(@ModelAttribute Event newEvent,
                                       Errors errors, Model model) {
-        if (errors.hasErrors()){
-            model.addAttribute("title","Create Event");
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Create Event");
             return "add";
         }
         eventRepository.save(newEvent);
         return "redirect:";
     }
+
     @GetMapping("update/{eventID}")
-    public String displayUpdateEventForm(Model model, @PathVariable int eventID){
+    public String displayUpdateEventForm(Model model, @PathVariable int eventID) {
         Optional optEvent = eventRepository.findById(eventID);
         if (optEvent.isPresent()) {
             Event event = (Event) optEvent.get();
-        model.addAttribute("event", event);
+            model.addAttribute("event", event);
             model.addAttribute("title", "Update");
-        return "update";
+            return "update";
         } else {
             return "redirect:../";
         }
     }
+
     @PostMapping("update/{eventID}")
     public String processUpdateEventForm(@ModelAttribute Event currentEvent,
-                                      Errors errors, Model model, @PathVariable int eventID) {
-        if (errors.hasErrors()){
-            model.addAttribute("title","Update Event");
+                                         Errors errors, Model model, @PathVariable int eventID) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Update Event");
             return "update";
         }
         Event currentEvent1 = eventRepository.findById(eventID).orElse(new Event());
@@ -85,20 +88,23 @@ public class EventController {
         eventRepository.save(currentEvent1);
         return "redirect:/";
     }
+
     @GetMapping("delete/{eventID}")
-    public String displayDeleteEventForm(Model model, @PathVariable int eventID){
+    public String displayDeleteEventForm(Model model, @PathVariable int eventID) {
         model.addAttribute("title", "Delete Events");
         Event event = eventRepository.findById(eventID).orElse(new Event());
         model.addAttribute("event", event);
         return "delete";
     }
+
     @PostMapping("delete/{eventID}")
-    public String processDeleteEventForm(@RequestParam String yesOrNo, @RequestParam int eventID){
+    public String processDeleteEventForm(@RequestParam String yesOrNo, @RequestParam int eventID) {
         if (yesOrNo.equals("yes")) {
             eventRepository.deleteById(eventID);
         }
         return "redirect:/";
     }
+
     @GetMapping("view/{eventID}")
     public String displayViewEventForm(Model model, @PathVariable int eventID) {
         Optional optEvent = eventRepository.findById(eventID);
@@ -107,7 +113,7 @@ public class EventController {
             model.addAttribute("title", "View Event Details");
             model.addAttribute("event", event);
             return "view";
-        }else{
+        } else {
             model.addAttribute("events", eventRepository.findAll());
             return "redirect:../";
         }
@@ -115,9 +121,9 @@ public class EventController {
 
     @PostMapping("view/{eventID}")
     public String processViewEventForm(@ModelAttribute Event currentEvent,
-                                         Errors errors, Model model, @PathVariable int eventID) {
-        if (errors.hasErrors()){
-            model.addAttribute("title","View Event");
+                                       Errors errors, Model model, @PathVariable int eventID) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "View Event");
             return "view";
         }
         Optional<Event> currentEvent2 = eventRepository.findById(eventID);
@@ -143,12 +149,12 @@ public class EventController {
     @PostMapping("signup")
     public String processAddTagForm(@ModelAttribute @Valid EventVolunteerDTO eventVolunteer,
                                     Errors errors,
-                                    Model model){
+                                    Model model) {
 
         if (!errors.hasErrors()) {
             Event event = eventVolunteer.getEvent();
             User user = eventVolunteer.getUser();
-            if (!event.getVolunteers().contains(user)){
+            if (!event.getVolunteers().contains(user)) {
                 System.out.println(user);
                 event.addVolunteer(user);
                 eventRepository.save(event);
@@ -157,5 +163,6 @@ public class EventController {
             }
             return "events";
         }
+    }
 }
 

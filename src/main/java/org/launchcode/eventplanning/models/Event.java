@@ -1,16 +1,12 @@
 package org.launchcode.eventplanning.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Event {
+@Table(name="EVENT")
+public class Event /*extends AbstractEntity*/ {
 
     @Id
     @GeneratedValue
@@ -20,8 +16,13 @@ public class Event {
     private String location;
     private String description;
 
-    public Event(){
-    }
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "event_volunteers",
+            joinColumns = {@JoinColumn(name = "event_id")},
+            inverseJoinColumns = {@JoinColumn(name = "volunteer_id")}
+    )
+    private final List<User> volunteers = new ArrayList<>();
 
     public Event(int id, String name, String location, String description) {
         this.id = id;
@@ -30,8 +31,7 @@ public class Event {
         this.description = description;
     }
 
-    @ManyToMany
-    private final List<User> users = new ArrayList<>();
+    public Event() { }
 
     public int getId() {
         return id;
@@ -65,12 +65,23 @@ public class Event {
         this.description = description;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<User> getVolunteers() {
+        return volunteers;
     }
 
-    public void addUser(User user) {
+    public void addVolunteer(User user) {
+        this.volunteers.add(user);
+        user.getEvents().add(this);
     }
 
-
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                ", volunteers=" + volunteers +
+                '}';
+    }
 }
