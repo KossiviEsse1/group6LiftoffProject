@@ -129,8 +129,9 @@ public class EventController {
         return "signup";
     }
 
-    @PostMapping("signup")
-    public String processAddTagForm(@RequestBody String name,
+    @PostMapping("signup/{eventID}")
+    public String processAddTagForm(@RequestParam Event event,
+                                    @RequestParam User user,
                                     Errors errors,
                                     Model model){
 
@@ -146,7 +147,8 @@ public class EventController {
             return "redirect:view?eventID=" + event.getId();
         }*/
 
-        System.out.println(name);
+    System.out.println(event);
+    System.out.println(user);
 
         return "events";
     }

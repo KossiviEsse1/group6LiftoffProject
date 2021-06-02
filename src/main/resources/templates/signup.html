@@ -20,6 +20,8 @@
         </div>
         <input type="hidden" th:field="${event}">
         <input type="hidden" th:field="${user}">
+        <p th:text="${event.toString}"></p>
+        <p th:text="${user.toString}"></p>
     </div>
     <input type="submit" class="btn btn-success" value="Sign Up">
 </form>
