@@ -137,6 +137,7 @@ public class EventController {
             Event event = eventVolunteer.getEvent();
             User user = eventVolunteer.getUser();
             if (!event.getVolunteers().contains(user)){
+                System.out.println(user);
                 event.addVolunteer(user);
                 eventRepository.save(event);
                 user.addEvent(event);

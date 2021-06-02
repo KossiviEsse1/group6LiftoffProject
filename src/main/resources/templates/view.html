@@ -3,9 +3,13 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <div th:replace="fragments :: page-header"></div>
-<h1 th:text="${event.name}">Default Title</h1>
-<p th:text="${'Location: ' + event.location}"}></p>
-<p th:text="${'Description: ' + event.description}"}></p>
-
+<br>
+<div class="card w-50">
+    <h1 class="card-header" th:text="${event.name}">Default Title</h1>
+    <div class="card-body">
+        <p th:text="${'Location: ' + event.location}"}></p>
+        <p th:text="${'Description: ' + event.description}"}></p>
+    </div>
+</div>
 </body>
 </html>
