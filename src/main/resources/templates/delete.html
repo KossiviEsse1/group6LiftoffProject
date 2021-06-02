@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
+<br>
 <body>
-<h1>Are you sure you want to delete this event?</h1>
-<form method="post" style="max-width:600px;" th:action="@{'/delete/' + ${event.id}}">
-    <div class="form-group">
-        <label th:for="name">Name:</label>
-        <p th:text="${event.name}"></p>
+<div class="card w-50">
+    <h1 class="card-header">Are you sure you want to delete this event?</h1>
+    <div class="card-body">
+        <form method="post" style="max-width:600px;" th:action="@{'/delete/' + ${event.id}}">
+            <div class="list-group-item">
+                <label th:for="name">Name:</label>
+                <p th:text="${event.name}"></p>
+            </div>
+
+            <div class="list-group-item">
+                <label th:for="location">Location:</label>
+                <p th:text="${event.location}"></p>
+            </div>
+
+            <div class="list-group-item">
+                <label th:for="description">Description:</label>
+                <p th:text="${event.description}"></p>
+            </div>
+            <br>
+            <div>
+                <input class="form-check-input" type="radio" id="yes" name="yesOrNo" value="yes">
+                <label class="form-check-label" for="yes">Yes</label>
+            </div>
+
+            <div>
+                <input class="form-check-input" type="radio" id="no" name="yesOrNo" value="no">
+                <label class="form-check-label" for="no">No</label>
+            </div>
+            <br>
+            <input type="hidden" id="eventID" name="eventID" th:value="${event.id}">
+
+
+            <input type="submit" class="btn btn-danger" value="Confirm" />
+        </form>
     </div>
-
-    <div class="form-group">
-        <label th:for="location">Location:</label>
-        <p th:text="${event.location}"></p>
-    </div>
-
-    <div class="form-group">
-        <label th:for="description">Description:</label>
-        <p th:text="${event.description}"></p>
-    </div>
-
-    <div>
-        <input type="radio" id="yes" name="yesOrNo" value="yes">
-        <label for="yes">Yes</label>
-    </div>
-
-    <div>
-        <input type="radio" id="no" name="yesOrNo" value="no">
-        <label for="no">No</label>
-    </div>
-    <input type="hidden" id="eventID" name="eventID" th:value="${event.id}">
-
-
-    <input type="submit" value="Confirm" />
-</form>
+</div>
 </body>
 </html>

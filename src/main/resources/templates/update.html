@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
-<h1 th:text="${'Update ' + event.name}">Default Title</h1>
-    <form method="post" style="max-width:600px;">
-        <div class="form-group">
-            <label th:for="name">Name</label>
-            <input class="form-control" th:field="${event.name}"/>
-            <span th:errors="${event.name}" class="error"></span>
+    <br>
+    <div class="card w-50">
+        <div class="card-header">
+            <h1 th:text="${'Update ' + event.name}">Default Title</h1>
         </div>
-
-        <div class="form-group">
-            <label th:for="location">Location</label>
-            <input class="form-control" th:field="${event.location}" />
-            <span th:errors="${event.location}" class="error"></span>
+        <div class="card-body">
+            <form method="post" style="max-width:600px;">
+                <div class="row gx-5">
+                    <div class="col">
+                        <label th:for="name">Name</label>
+                        <input class="form-control" th:field="${event.name}"/>
+                        <span th:errors="${event.name}" class="error"></span>
+                    </div>
+                    <div class="col">
+                        <label th:for="location">Location</label>
+                        <input class="form-control" th:field="${event.location}" />
+                        <span th:errors="${event.location}" class="error"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label th:for="description">Description</label>
+                    <input class="form-control" th:field="${event.description}" />
+                    <span th:errors="${event.description}" class="error"></span>
+                </div>
+                <br>
+                <input type="submit" class="btn btn-success" value="Save Changes" />
+            </form>
         </div>
-
-        <div class="form-group">
-            <label th:for="description">Description</label>
-            <input class="form-control" th:field="${event.description}" />
-            <span th:errors="${event.description}" class="error"></span>
-        </div>
-
-        <input type="submit" value="Save Changes" />
-    </form>
+    </div>
 </body>
 </html>

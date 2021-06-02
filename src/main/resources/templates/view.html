@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 <div th:replace="fragments :: page-header"></div>
+<<<<<<< HEAD
 <h1 th:text="${event.name}">Default Title</h1>
 <p th:text="${'Location: ' + event.location}"}></p>
 <p th:text="${'Description: ' + event.description}"}></p>
 
 
 
+=======
+<br>
+<div class="card w-50">
+    <h1 class="card-header" th:text="${event.name}">Default Title</h1>
+    <div class="card-body">
+        <p th:text="${'Location: ' + event.location}"}></p>
+        <p th:text="${'Description: ' + event.description}"}></p>
+    </div>
+</div>
+>>>>>>> 858395c53e6614b8989ebd2dc2007318a4b32ad3
 </body>
 </html>

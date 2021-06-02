@@ -10,10 +10,5 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends CrudRepository<Event, Integer> {
-    /*@Query(value = "SELECT c FROM Event c WHERE c.name LIKE '%' || :keyword || '%'"
-            + " OR c.name LIKE '%' || :keyword || '%'"
-            + " OR c.location LIKE '%' || :keyword || '%'"
-            + " OR c.description LIKE '%' || :keyword || '%'"
-    )
-    public List<Event> search(@Param("keyword") String keyword);*/
+
 }
