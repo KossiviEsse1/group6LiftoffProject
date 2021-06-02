@@ -2,21 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
-<<<<<<< HEAD
-<h1>Your Events</h1>
-<ul>
-    <li th:each="event : ${events}">
-        <a style="font-size:35px" th:text="${event.name}"></a>
-        <a>View Details</a>
-        <a th:href="@{'/update/' + ${event.id}}">Edit</a>
-    </li>
-</ul>
-<p>
-    <a th:href="'/add'">Create A New Event</a>
-</p>
 <div th:replace="fragments :: page-header"></div>
-=======
-    <div th:replace="fragments :: page-header"></div>
->>>>>>> 858395c53e6614b8989ebd2dc2007318a4b32ad3
 </body>
 </html>
