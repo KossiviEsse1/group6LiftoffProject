@@ -112,7 +112,7 @@ public class EventController {
             return "redirect:../";
         }
     }
-    
+
     @PostMapping("view/{eventID}")
     public String processViewEventForm(@ModelAttribute Event currentEvent,
                                          Errors errors, Model model, @PathVariable int eventID) {
@@ -123,19 +123,7 @@ public class EventController {
         Optional<Event> currentEvent2 = eventRepository.findById(eventID);
         return "redirect:/";
     }
-
-/*    @GetMapping("signup")
-    public String signingUp(@RequestParam Integer eventId, Model model){
-        Optional<Event> result = eventRepository.findById(eventId);
-        Event event = result.get();
-        model.addAttribute("title", "Add Event: " + event.getUsers());
-        model.addAttribute("users", eventUserRepository.findAll());
-        EventUserDTO eventUser = new EventUserDTO();
-        eventUser.setEvent(event);
-        model.addAttribute("eventUser", eventUser);
-        return "signup";
-    }*/
-
+    
     @GetMapping("signup/{eventId}")
     public String signingUp(@PathVariable int eventId,
                             Model model,
