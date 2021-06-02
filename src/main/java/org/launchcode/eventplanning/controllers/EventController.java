@@ -1,6 +1,6 @@
 package org.launchcode.eventplanning.controllers;
 
-import org.launchcode.eventplanning.models.DTO.EventUserDTO;
+import org.launchcode.eventplanning.models.DTO.EventVolunteerDTO;
 import org.launchcode.eventplanning.models.Event;
 import org.launchcode.eventplanning.models.User;
 import org.launchcode.eventplanning.models.data.EventRepository;
@@ -123,40 +123,39 @@ public class EventController {
         Optional<Event> currentEvent2 = eventRepository.findById(eventID);
         return "redirect:/";
     }
-    
-    @GetMapping("signup/{eventId}")
-    public String signingUp(@PathVariable int eventId,
-                            Model model,
-                            HttpServletRequest request){
 
-        Optional<Event> result = eventRepository.findById(eventId);
-        Event event = result.get();
+    @GetMapping("signup")
+    public String volunteerSignUp(@RequestParam int eventID,
+                                  Model model,
+                                  HttpServletRequest request) {
         HttpSession session = request.getSession();
-        model.addAttribute("user", authenticationController.getUserFromSession(session));
-        User user = authenticationController.getUserFromSession(session);
-        if(user.getRole().equals("volunteer")){
-            model.addAttribute("title", "Add Event: " + event.getUsers());
-            EventUserDTO eventUser = new EventUserDTO();
-            eventUser.setEvent(event);
-            model.addAttribute("eventUser", eventUser);
-        }
-        return "redirect:";
+        User currentlyLoggedInUser = authenticationController.getUserFromSession(session);
+        Optional<Event> result = eventRepository.findById(eventID);
+        Event event = result.get();
+        model.addAttribute("title", "Volunteer for: " + event.getName());
+        EventVolunteerDTO eventVolunteer = new EventVolunteerDTO();
+        eventVolunteer.setEvent(event);
+        eventVolunteer.setUser(currentlyLoggedInUser);
+        model.addAttribute("eventVolunteer", eventVolunteer);
+        return "signup";
     }
 
-    @PostMapping("signup/{eventId}")
-    public String signingUp2(@ModelAttribute @Valid EventUserDTO eventUser,
+    @PostMapping("signup")
+    public String processAddTagForm(@ModelAttribute @Valid EventVolunteerDTO eventVolunteer,
                                     Errors errors,
                                     Model model){
+
         if (!errors.hasErrors()) {
-            Event event = eventUser.getEvent();
-            User user = eventUser.getUser();
-            if (!event.getUsers().contains(user)){
-                event.addUser(user);
+            Event event = eventVolunteer.getEvent();
+            User user = eventVolunteer.getUser();
+            if (!event.getVolunteers().contains(user)){
+                System.out.println(user);
+                event.addVolunteer(user);
                 eventRepository.save(event);
+                user.addEvent(event);
+                userRepository.save(user);
             }
-            return "redirect:detail?eventId=" + event.getId();
+            return "events";
         }
-        return "redirect:/";
-    }
 }
 

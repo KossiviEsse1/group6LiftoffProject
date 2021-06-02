@@ -6,14 +6,14 @@ import org.launchcode.eventplanning.models.User;
 
 import javax.validation.constraints.NotNull;
 
-public class EventUserDTO {
+public class EventVolunteerDTO {
     @NotNull
     private Event event;
 
     @NotNull
     private User user;
 
-    public EventUserDTO(){}
+    public EventVolunteerDTO(){}
 
     public Event getEvent() {
         return event;

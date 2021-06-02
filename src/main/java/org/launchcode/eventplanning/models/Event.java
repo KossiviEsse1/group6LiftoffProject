@@ -72,9 +72,5 @@ public class Event {
     public void addUser(User user) {
     }
 
-    //adding user
-  /*  public void addUser(User user){
-        this.users.add(user);
-    }*/
 
 }
