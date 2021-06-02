@@ -112,8 +112,8 @@ public class EventController {
         }
     }
 
-    @GetMapping("signup")
-    public String volunteerSignUp(@RequestParam int eventID,
+    @GetMapping("signup/{eventID}")
+    public String volunteerSignUp(@PathVariable int eventID,
                                   Model model,
                                   HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -124,27 +124,29 @@ public class EventController {
         EventVolunteerDTO eventVolunteer = new EventVolunteerDTO();
         eventVolunteer.setEvent(event);
         eventVolunteer.setUser(currentlyLoggedInUser);
-        model.addAttribute("eventVolunteer", eventVolunteer);
+        model.addAttribute("event", eventVolunteer.getEvent());
+        model.addAttribute("user", eventVolunteer.getUser());
         return "signup";
     }
 
     @PostMapping("signup")
-    public String processAddTagForm(@ModelAttribute @Valid EventVolunteerDTO eventVolunteer,
+    public String processAddTagForm(@RequestBody String name,
                                     Errors errors,
                                     Model model){
 
-        if (!errors.hasErrors()) {
-            Event event = eventVolunteer.getEvent();
-            User user = eventVolunteer.getUser();
+
+/*        if (!errors.hasErrors()) {
+
             if (!event.getVolunteers().contains(user)){
-                System.out.println(user);
                 event.addVolunteer(user);
                 eventRepository.save(event);
                 user.addEvent(event);
                 userRepository.save(user);
             }
-            return "events";
-        }
+            return "redirect:view?eventID=" + event.getId();
+        }*/
+
+        System.out.println(name);
 
         return "events";
     }

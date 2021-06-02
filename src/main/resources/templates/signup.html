@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
 
+<body class="container">
+<!--
+<div class="card w-50">
+-->
 <header th:replace="fragments :: page-header"></header>
 
 <form method="post">
     <div class="form-group">
         <h2>You are signing up for:  </h2>
-        <input type="hidden" th:field="${eventVolunteer}">
+        <div class="card w-50">
+            <h1 class="card-header" th:text="${event.name}">Default Title</h1>
+            <div class="card-body">
+                <p th:text="${'Location: ' + event.location}"}></p>
+                <p th:text="${'Description: ' + event.description}"}></p>
+            </div>
+        </div>
+        <input type="hidden" th:field="${event}">
+        <input type="hidden" th:field="${user}">
     </div>
     <input type="submit" class="btn btn-success" value="Sign Up">
 </form>
